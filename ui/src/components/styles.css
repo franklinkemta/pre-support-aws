@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.assistant {
+    @apply fixed bottom-3 right-0 m-7 p-2 flex-col justify-center items-center rounded-full bg-gradient-to-r from-[#1F0930] via-[#FF9900] to-white opacity-80 hover:opacity-100;
+}
+
+@layer components {
+    @keyframes continuous-scale {
+
+        0%,
+        100% {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(1.2);
+        }
+    }
+
+    .assistant-icon {
+        @apply inline-block w-[80px] h-[80px] rounded-lg transition-all duration-300 ease-in-out;
+    }
+
+    .assistant-icon:hover {
+        @apply w-[100px] h-[100px];
+    }
+
+    .assistant-icon-active {
+        animation: continuous-scale 3s infinite ease-in-out;
+    }
+
+    .assistant-status {
+        @apply flex justify-center align-middle absolute transform -translate-y-1 mx-auto cursor-default
+    }
+}

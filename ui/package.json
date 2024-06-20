@@ -1,0 +1,41 @@
+{
+  "name": "pre-support-aws",
+  "version": "1.0.0",
+  "description": "This repository contains the code for a pre-consultation on AWS services that enables users to have a conversational exchange with an AI using their voice. The application captures audio from the user's microphone, processes it in real time, and delivers the AI's audio response back to the user. Each conversation is managed as a separate session to ensure privacy and coherence.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/franklinkemta/pre-support-aws.git"
+  },
+  "keywords": [
+    "aws",
+    "llms",
+    "ai",
+    "unicorne",
+    "associate",
+    "solution",
+    "architect",
+    "reatime",
+    "chat",
+    "tts",
+    "stt",
+    "RAG",
+    "lambda",
+    "s3",
+    "bedrock",
+    "polly",
+    "elasticache",
+    "transcribe",
+    "text-to-speech",
+    "cloudwatch"
+  ],
+  "author": "Franklin Kemta <franklinkemta@gmail.com> (dev.franklinkemta.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/franklinkemta/pre-support-aws/issues"
+  },
+  "homepage": "https://github.com/franklinkemta/pre-support-aws#readme"
+}

@@ -19,6 +19,18 @@
         }
     }
 
+    @keyframes continuous-scale-small {
+
+        0%,
+        100% {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(1.1);
+        }
+    }
+
     .assistant-icon {
         @apply inline-block w-[80px] h-[80px] rounded-lg transition-all duration-300 ease-in-out;
     }
@@ -29,6 +41,10 @@
 
     .assistant-icon-active {
         animation: continuous-scale 3s infinite ease-in-out;
+    }
+
+    .assistant-active {
+        animation: continuous-scale-small 3s infinite ease-in-out;
     }
 
     .assistant-status {

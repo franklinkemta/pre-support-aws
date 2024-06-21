@@ -18,8 +18,8 @@ function Layout({ visible = false, title, children }: LayoutProps) {
     return (
         <Transition appear show={isOpen}>
             <Dialog as="div" className="relative z-10 focus:outline-none" onClose={toggle}>
-                <div className="fixed inset-0 z-10 w-screen overflow-y-auto bg-transparent">
-                    <div className="flex min-h-full items-center justify-center p-4">
+                <div className="fixed inset-0 z-10 w-screen overflow-y-auto bg-[#1F0930]">
+                    <div className="flex min-h-full items-center justify-center p-3">
                         <TransitionChild
                             enter="ease-out duration-300"
                             enterFrom="opacity-0 transform-[scale(95%)]"
@@ -28,10 +28,11 @@ function Layout({ visible = false, title, children }: LayoutProps) {
                             leaveFrom="opacity-100 transform-[scale(100%)]"
                             leaveTo="opacity-0 transform-[scale(95%)]"
                         >
-                            <DialogPanel className="w-full max-w-md rounded-xl bg-white/5 p-6 backdrop-blur-2xl">
-                                <DialogTitle as="h3" className="text-base/7 font-medium text-white">
-                                    {title}
+                            <DialogPanel className="lg:w-2/6 w-full min-h-[60vh] h-full rounded-xl bg-[#242F3E] border-4 border-[#D4DADA] p-2 backdrop-blur-2xl">
+                                <DialogTitle as="div" className="text-base/7 flex text-center justify-center font-bold text-white">
+                                ✅ {title}
                                 </DialogTitle>
+                                <hr />
                                 {children}
                             </DialogPanel>
                         </TransitionChild>

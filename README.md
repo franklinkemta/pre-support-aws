@@ -1,11 +1,11 @@
-# Real-Time Voice Chat Application with an LLM acting as AWS Associate Solution Architect (Pre-conseil)
+# Real-Time Voice Chat Application with an LLM acting as AWS Associate Solution Architect (Pre-support)
 
 This repository contains the code for a pre-consultation on AWS services that enables users to have a conversational exchange with an AI using their voice. The application captures audio from the user's microphone, processes it in real time, and delivers the AI's audio response back to the user. Each conversation is managed as a separate session to ensure privacy and coherence.
 
 ## Features
 
-- Finetuned (RAG mode) as an AWS Solution Associate based knownedge and on Unicorne Website (Service conseil
-infonuagique, Step 1. Évaluation, Partenaire AWS)
+- Finetuned LLM model (RAG approach) to provide aAWS Solution Associate based knownedge and act as a Unicorne.cloud agent, check the Website at Service conseil
+infonuagique, Step 1. Évaluation, Partenaire AWS
 - Real-time audio capture and streaming.
 - Bidirectional communication using WebSockets.
 - Speech-to-text conversion using Amazon Transcribe.
@@ -14,11 +14,11 @@ infonuagique, Step 1. Évaluation, Partenaire AWS)
 - Session-based interaction with unique IDs for users.
 - Automatic PDF transcript generation and storage in Amazon S3.
 - Allowing user to continue the conversation with an expert passing the gathered PDF pre-evaluation
-- Frontend built with React and TypeScript, styled with Tailwind CSS and Radix UI.
+- Frontend built with React and TypeScript, styled with Tailwind CSS and Shadcn UI.
 
 ## Frontend (ui)
 
-The frontend is a single-module application built with React and TypeScript. It uses Tailwind CSS for styling and some Radix UI components for accessibility.
+The frontend is a single-module application built with React and TypeScript. It uses Tailwind CSS for styling and some Shadcn UI components for accessibility.
 It's meant to be integrated as a floating widget that can be popup on top of the company's page
 
 ### Setup

@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 .layout {
-    @apply h-[100vh] w-full bg-black
+    @apply h-screen w-screen
 }

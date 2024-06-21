@@ -1,16 +1,16 @@
-import React from 'react';
+import React from 'react'
 import { useState } from 'react'
 
 import './styles.css'
 
 import icon from '@/assets/icon.svg'
 
-function Assistant() {
+function AssitantToggle() {
   const [active, setActive] = useState(false)
 
   return (
     <a className="assistant" onClick={() => setActive((count) => !count)} href="#">
-        <img className="assistant-icon assistant-icon-active" src={icon} alt="Assistant" />
+        <img className="assistant-icon assistant-icon-active" src={icon} alt="AssitantToggle" />
         <div className="assistant-status">
           <span className="rounded-full bg-white text-sm">
           { active ? '' : '' }
@@ -20,4 +20,4 @@ function Assistant() {
   )
 }
 
-export default Assistant
+export default AssitantToggle

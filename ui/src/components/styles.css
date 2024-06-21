@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .assistant {
-    @apply fixed bottom-3 right-0 m-7 p-2 flex-col justify-center items-center rounded-full bg-gradient-to-r from-[#1F0930] via-[#FF9900] to-white opacity-80 hover:opacity-100;
+    @apply fixed bottom-3 right-0 m-7 z-20 p-2 flex-col justify-center items-center rounded-full bg-gradient-to-r from-[#1F0930] via-[#FF9900] to-white opacity-80 hover:opacity-100;
 }
 
 @layer components {

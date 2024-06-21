@@ -1,11 +1,16 @@
-import React from 'react';
+import React from 'react'
 
-import Assistant from '@/components/Assistant';
+import AssistantToggle from '@/components/AssistantToggle'
+import Layout from '@/components/Layout'
+
 
 function DemoLayout() {
   return (
     <div className="layout">
-        <Assistant />
+        <Layout visible>
+          <>Hi</>
+        </Layout>
+        <AssistantToggle />
     </div>
   )
 }

@@ -21,6 +21,9 @@ infonuagique, Step 1. Évaluation, Partenaire AWS
 The frontend is a single-module application built with React and TypeScript. It uses Tailwind CSS for styling and some Shadcn UI components for accessibility.
 It's meant to be integrated as a floating widget that can be popup on top of the company's page
 
+![ui-view-1](ui/view-1.png)
+![ui-view-2](ui/view-2.png)
+
 ### Setup
 
 1. Install Node.js and npm.

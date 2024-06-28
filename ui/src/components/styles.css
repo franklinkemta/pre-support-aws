@@ -2,9 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
-.assistant {
-    @apply fixed bottom-3 right-0 m-7 z-20 p-2 flex-col justify-center items-center rounded-full bg-gradient-to-r from-[#1F0930] via-[#FF9900] to-white opacity-80 hover:opacity-100;
+:root {
+    --color-0: #1F0930;
+    --color-1: #FF9900;
+    --color-2: #242F3E;
+    --color-3: #D4DADA;
 }
+
+.ripple-effect {
+    @apply hover:bg-opacity-30 hover:cursor-pointer hover:border-[var(--color-1)]
+}
+
+.assistant {
+    @apply fixed bottom-3 right-0 m-7 z-20 p-2 flex-col justify-center items-center rounded-full bg-gradient-to-r from-[var(--color-0)] via-[var(--color-1)] to-white opacity-80 hover:opacity-100;
+}
+
 
 @layer components {
     @keyframes continuous-scale {

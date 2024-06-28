@@ -14,11 +14,11 @@ infonuagique, Step 1. Évaluation, Partenaire AWS
 - Session-based interaction with unique IDs for users.
 - Automatic PDF transcript generation and storage in Amazon S3.
 - Allowing user to continue the conversation with an expert passing the gathered PDF pre-evaluation
-- Frontend built with React and TypeScript, styled with Tailwind CSS and Shadcn UI.
+- Frontend built with React and TypeScript, styled with Tailwind CSS and Headless UI.
 
 ## Frontend (ui)
 
-The frontend is a single-module application built with React and TypeScript. It uses Tailwind CSS for styling and some Shadcn UI components for accessibility.
+The frontend is a single-module application built with React and TypeScript. It uses Tailwind CSS for styling and some Headless UI components for accessibility.
 It's meant to be integrated as a floating widget that can be popup on top of the company's page
 
 ![ui-view-1](ui/view-1.png)

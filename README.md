@@ -38,9 +38,9 @@ It's meant to be integrated as a floating widget that can be popup on top of the
 
 ### Usage
 
-- Users can start the voice chat by clicking the "Play" button.
-- The "Stop" button can be used to end the audio capture.
-- The "End Session" button will terminate the session and trigger the PDF generation.
+- Users can start talking directly after enabling browser microphone permission
+- Silence between user talk allow assistant to detect when it needs to trigger it answeer
+- The end of the session will trigger when the user clicks multiple time on the assistant circle and trigger a dialog summary PDF generation.
 
 ## Backend (manual deploy)
 

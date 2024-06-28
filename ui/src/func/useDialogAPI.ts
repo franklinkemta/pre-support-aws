@@ -1,12 +1,11 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import { TypewriterClass } from 'typewriter-effect'
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'ws://localhost:8080' // Default to localhost for development
-const TIMEOUT = 3000
+const TIMEOUT = 3000 // 3 seconds
 const DEFAULT_STATUS_TRANSCRIPT = 'Ringing...'
 
 export const useDialogAPI = () => {
-  const [sessionId, setSessionId] = useState<string | null>(null)
   const [isRecording, setIsRecording] = useState(false)
   const [statusMessage, setStatusMessage] = useState<string | null>(DEFAULT_STATUS_TRANSCRIPT)
   const [typewriter, setTypeWriter] = useState<TypewriterClass>()
@@ -14,38 +13,59 @@ export const useDialogAPI = () => {
   const mediaRecorderRef = useRef<MediaRecorder | null>(null)
   const audioPlayerRef = useRef<HTMLAudioElement | null>(null)
 
-  const fetchSessionId = async () => {
-    try {
-      const response = await fetch(`${BACKEND_URL}/connect`)
-      if (!response.ok) {
-        throw new Error(`Error fetching session ID: ${response.statusText}`)
-      }
-      const data = await response.json()
-      setSessionId(data.session_id)
-    } catch (error) {
-      console.error('Error fetching session ID:', error)
-      setStatusMessage('Error starting session.')
+  const handleUserInput = (event: BlobEvent) => {
+    if (event.data.size > 0) {
+        // user said someting or interupted assistant
+        if (audioPlayerRef.current && typewriter) {
+            audioPlayerRef.current.pause()
+            typewriter.pauseFor(2).deleteAll().typeString('...')
+        }
+        // send audio
+        const audioBlob = event.data
+        if (socketRef.current?.readyState === WebSocket.OPEN) {
+            socketRef.current.send(audioBlob)
+        } else {
+            console.error('Not open. Cannot send audio.')
+        }
+    } else {
+        // user went silent, assistant turn
+        if (typewriter) {
+            typewriter.pauseFor(2).deleteAll().typeString('Processing!')
+        }
+    }
+    
+  }
+
+  const handleAssistantOutput = (output: { sessionId: string, audioBlob: Blob, transcript?: string}) => {
+    if (output.audioBlob instanceof Blob) {
+        const audioUrl = URL.createObjectURL(output.audioBlob)
+        if (audioPlayerRef.current && typewriter) {
+            audioPlayerRef.current.src = audioUrl
+            audioPlayerRef.current.play()
+            if (output.transcript) {
+                typewriter.pauseFor(2).deleteAll().typeString(output.transcript)
+            } else {
+                typewriter.pauseFor(2).deleteAll().typeString('Answering!')
+            }
+        }
+    } else {
+        console.warn('invalid audio Blob')
     }
   }
 
   const startRecording = () => {
-    setStatusMessage(null) // Clear any previous errors
-
+    setStatusMessage("Checking microphone...")
     navigator.mediaDevices.getUserMedia({ audio: true })
-      .then((stream) => {
+    .then((stream) => {
         setIsRecording(true)
         mediaRecorderRef.current = new MediaRecorder(stream)
-        mediaRecorderRef.current.ondataavailable = (event) => {
-          if (event.data.size > 0) {
-            sendAudio(event.data)
-          }
-        }
+        mediaRecorderRef.current.ondataavailable = handleUserInput
         mediaRecorderRef.current.start()
-      })
-      .catch((error) => {
+    })
+    .catch((error) => {
         console.error('Error accessing microphone:', error)
         setStatusMessage('Error accessing microphone. Please grant permissions.')
-      })
+    })
   }
 
   const stopRecording = () => {
@@ -55,66 +75,55 @@ export const useDialogAPI = () => {
     setIsRecording(false)
   }
 
-  const sendAudio = (audioBlob: Blob) => {
-    if (socketRef.current?.readyState === WebSocket.OPEN) {
-      socketRef.current.send(audioBlob)
-    } else {
-      console.error('Not open. Cannot send audio.')
-      setStatusMessage('Error sending audio. Please try again.') 
-    }
-  }
-
-  const playAudio = (audioBlob: Blob) => {
-    const audioUrl = URL.createObjectURL(audioBlob)
-    if (audioPlayerRef.current) {
-      audioPlayerRef.current.src = audioUrl
-      audioPlayerRef.current.play()
-    }
-  }
-
   const endSession = async () => {
     try {
       stopRecording() 
       if (socketRef.current) {
         socketRef.current.close()
       }
-      if (sessionId) {
-        // Send request to backend to end session and generate PDF (replace with your endpoint)
-        const response = await fetch(`${BACKEND_URL}/end-session/${sessionId}`) 
-        if (!response.ok) {
-          throw new Error(`Error ending session: ${response.statusText}`)
-        }
-        // Handle response, e.g., display message that transcript is being generated
-        console.log('Session ended successfully')
-      }
+      console.log('Session ended successfully')
     } catch (error) {
       console.error('Error ending session:', error)
-      setStatusMessage('Error ending session.') 
     }
   }
 
+  const toggleListening = useCallback(() => {
+    if (isRecording) stopRecording()
+    else startRecording()
+  },[isRecording])
+
   useEffect(() => {
     if (!typewriter) return
+
     const connectWebSocket = () => {
       socketRef.current = new WebSocket(BACKEND_URL) 
 
-      socketRef.current.onopen = () => {
-        console.log('Connected')
-        fetchSessionId()
+      socketRef.current.onopen = (event) => {
+        console.log('Connected', event)
+        if (socketRef.current) {
+            socketRef.current.send("Hi")
+        }
+        if (!isRecording) startRecording()
       }
 
       socketRef.current.onmessage = (event) => {
-        try {
-          const audioBlob = event.data
-          // event.data should contain audio transcript so it can be typed by the typewritter
-          if (audioBlob instanceof Blob) {
-            playAudio(audioBlob)
-          } else {
-            console.error('Received non-Blob data:', event.data)
+          try {
+            console.log("assistant message:", event.data)
+            const data = JSON.parse(event.data);
+            const msgType: string = data.type
+
+            switch (msgType) {
+                case 'message':
+                    handleAssistantOutput(data.value)
+                    break
+                default:
+                    console.error('Unknow event data type', data)
+                    break
           }
+
+          
         } catch (error) {
           console.error('Error handling incoming message:', error)
-          setStatusMessage('Error playing audio response.') 
         }
       }
 
@@ -122,15 +131,12 @@ export const useDialogAPI = () => {
         console.log('closed:', event)
         if (!event.wasClean) {
           // Attempt reconnect if the connection closed unexpectedly
-          // typewriter.typeString("Welcome, please wait...")
-          setTimeout(connectWebSocket, TIMEOUT) // Reconnect after 3 seconds
+          setTimeout(connectWebSocket, TIMEOUT) // Reconnect after timeout
         }
       }
 
       socketRef.current.onerror = (error) => {
         console.error('error:', error)
-        // typewriter.typeString("Welcome, please wait...").start()
-        // setStatusMessage('Connection error.')
       }
     }
 
@@ -143,22 +149,21 @@ export const useDialogAPI = () => {
 
   useEffect(() => {
     if (!typewriter || !statusMessage) return
-    if (!sessionId) {
-        typewriter.deleteAll()
+    typewriter.deleteAll()
+    if (!isRecording && statusMessage != DEFAULT_STATUS_TRANSCRIPT) {
         typewriter.typeString(DEFAULT_STATUS_TRANSCRIPT).start()
         return
     }
     typewriter.stop()
     typewriter.typeString(statusMessage).start()
 
-  }, [typewriter, statusMessage])
+  }, [typewriter, statusMessage, isRecording])
   
 
     return {
         isRecording,
         statusMessage,
-        startRecording,
-        stopRecording,
+        toggleListening,
         endSession,
         setTypeWriter,
     }

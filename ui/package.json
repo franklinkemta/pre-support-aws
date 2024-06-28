@@ -59,7 +59,7 @@
     "type": "git",
     "url": "git+https://github.com/franklinkemta/pre-support-aws.git"
   },
-  "author": "Franklin Kemta <franklinkemta@gmail.com> (dev.franklinkemta.com)",
+  "author": "Franklin Kemta (dev.franklinkemta.com)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/franklinkemta/pre-support-aws/issues"

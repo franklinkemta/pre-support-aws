@@ -16,7 +16,12 @@ infonuagique, Step 1. Évaluation, Partenaire AWS
 - Allowing user to continue the conversation with an expert passing the gathered PDF pre-evaluation
 - Frontend built with React and TypeScript, styled with Tailwind CSS and Headless UI.
 
-## Frontend (ui)
+## [WIP] Deploy (click deploy)
+1. Navigate to the `ci`directory
+2. configure your aws sdk sso
+3. run `sh deploy.sh` to deploy both frontend an backend
+
+## Frontend (manual deploy)
 
 The frontend is a single-module application built with React and TypeScript. It uses Tailwind CSS for styling and some Headless UI components for accessibility.
 It's meant to be integrated as a floating widget that can be popup on top of the company's page
@@ -37,15 +42,22 @@ It's meant to be integrated as a floating widget that can be popup on top of the
 - The "Stop" button can be used to end the audio capture.
 - The "End Session" button will terminate the session and trigger the PDF generation.
 
-## Backend
+## Backend (manual deploy)
 
 The backend is a serverless application deployed using AWS Chalice. It handles WebSocket connections, audio processing, and AI interactions.
 
 ### Setup
 
 1. Install AWS CLI and configure it with your AWS credentials.
-2. Install Chalice using `pip install chalice`.
-3. Navigate to the `api` directory and deploy the application with `chalice deploy`.
+2. Navigate to the `api` directory, Create the python env and Install requirements using:
+```bash
+    cd api
+    python3.8 -m venv .venv
+    source .venv/bin/activate
+    pip install .
+```
+3. Deploy the application with `chalice deploy`.
+4. When done `chalice delete`
 
 ### Services
 

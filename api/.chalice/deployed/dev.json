@@ -1,0 +1,44 @@
+{
+  "resources": [
+    {
+      "name": "default-role",
+      "resource_type": "iam_role",
+      "role_arn": "arn:aws:iam::652833672681:role/pre-support-aws-dev",
+      "role_name": "pre-support-aws-dev"
+    },
+    {
+      "name": "api_handler",
+      "resource_type": "lambda_function",
+      "lambda_arn": "arn:aws:lambda:us-east-2:652833672681:function:pre-support-aws-dev"
+    },
+    {
+      "name": "rest_api",
+      "resource_type": "rest_api",
+      "rest_api_id": "5e5xt3u6zl",
+      "rest_api_url": "https://5e5xt3u6zl.execute-api.us-east-2.amazonaws.com/api/"
+    },
+    {
+      "name": "websocket_connect",
+      "resource_type": "lambda_function",
+      "lambda_arn": "arn:aws:lambda:us-east-2:652833672681:function:pre-support-aws-dev-websocket_connect"
+    },
+    {
+      "name": "websocket_message",
+      "resource_type": "lambda_function",
+      "lambda_arn": "arn:aws:lambda:us-east-2:652833672681:function:pre-support-aws-dev-websocket_message"
+    },
+    {
+      "name": "websocket_disconnect",
+      "resource_type": "lambda_function",
+      "lambda_arn": "arn:aws:lambda:us-east-2:652833672681:function:pre-support-aws-dev-websocket_disconnect"
+    },
+    {
+      "name": "websocket_api",
+      "resource_type": "websocket_api",
+      "websocket_api_url": "wss://06jx4mhyw3.execute-api.us-east-2.amazonaws.com/api/",
+      "websocket_api_id": "06jx4mhyw3"
+    }
+  ],
+  "schema_version": "2.0",
+  "backend": "api"
+}

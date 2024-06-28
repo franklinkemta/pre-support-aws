@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pre-support-aws"
+version = "0.1.0"
+description = "Real-Time Voice Chat Application Backend with AWS Services"
+authors = [ { name = "Franklin Kemta" } ]
+requires-python = ">=3.8"
+license = { "text" = "MIT" }
+dependencies = [
+    "chalice>=1.31.2",
+    "boto3>=1.33.13",
+    "redis>=5.0.7",
+]
+
+[project.optional-dependencies]
+all = [
+    "websocket-client",
+    "uuid>=1.30",
+    "fpdf>=1.7.2"
+]
+
+
+[tool.setuptools]
+packages = { find = { where = ["."], include = ["pre-support-aws", "pre-support-aws.*"], exclude = ["tests"] } }
